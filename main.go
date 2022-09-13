@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/gdamore/tcell/v2"
@@ -17,11 +16,6 @@ func main() {
 	DefStyle := tcell.StyleDefault.Background(tcell.ColorReset).Foreground(tcell.ColorReset)
 	s.SetStyle(DefStyle)
 
-	quit := func() {
-		s.Fini()
-		os.Exit(0)
-	}
-
 	x := 0
 
 	
@@ -35,7 +29,7 @@ func main() {
 		x++
 
 		if w, _ := s.Size(); x >= w - 1 {
-			quit()
+			quit(s)
 		}
 
 		s.Show()
