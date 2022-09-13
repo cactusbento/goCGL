@@ -25,18 +25,7 @@ func main() {
 	x := 0
 
 	
-	go func() {
-		for {
-			ev := s.PollEvent()
-
-			switch ev := ev.(type) {
-			case *tcell.EventKey:
-				if ev.Key() == tcell.KeyCtrlC {
-					quit()
-				}
-			}
-		}
-	}()
+	go eventHandling(s)
 
 	for {
 		s.Clear()
