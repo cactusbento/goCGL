@@ -6,7 +6,9 @@ import (
 
 func InitScreen() tcell.Screen {
 	s, err := tcell.NewScreen()
-	if err != nil { panic(err) }
+	if err != nil {
+		panic(err)
+	}
 
 	if err := s.Init(); err != nil {
 		panic(err)
