@@ -14,4 +14,5 @@ This is an implementation of Conway's Game of Life (CGL) in GO in Raylib.
 ## Controls
 
 Mouse 1: Toggle Cells (Can drag while paused)
+
 Mouse 2: Pause/Unpause
