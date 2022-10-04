@@ -1,39 +1,41 @@
 package main
 
 import (
-	"fmt"
-	"time"
+	"log"
 
-	"github.com/gdamore/tcell/v2"
+	"github.com/gen2brain/raylib-go/raylib"
 )
 
 var (
-	// Set default text style
-	defStyle = tcell.StyleDefault.
-				Background(tcell.ColorReset).
-				Foreground(tcell.ColorReset)
+	Mkill = false 
 	W int 
-	H int
+	H int 
+	Size = 10
 	Alive = make( map[cell]bool )
 	Run = true 
 )
 
 func main() {
-	fmt.Println("Conway's Game Of Life")
-	
-	s := InitScreen()
+	rl.SetConfigFlags(rl.FlagWindowResizable)
+	rl.InitWindow(800, 600, "Conway's Game of Life ")
+	rl.SetTargetFPS(30)
 
-	W, H = s.Size()
 
-	s.SetStyle(defStyle)
-	go eventHandling(s)
+	log.Println("Game Started.")
 
-	for {
-		s.Clear()
+	for !rl.WindowShouldClose() {
+		W, H = rl.GetScreenWidth(), rl.GetScreenHeight()
+
+		W /= Size
+		H /= Size
+
+		rl.BeginDrawing()
+
+		eventHandler()
+
+		nGen := nextGen()
 		
 		if Run {
-			nGen := nextGen()
-
 			// Erase Alive Content
 			for c := range Alive { delete(Alive, c) }
 		
@@ -42,18 +44,26 @@ func main() {
 				Alive[c] = v 
 			}
 		} else {
-			for i, v := range "PAUSED" {
-				s.SetContent(i, 0, v, nil, defStyle)
-			}
+			rl.DrawText("PAUSED", 0, 0, 20, rl.LightGray)
 		}
 
-		// Update list of alive cells 
+		rl.ClearBackground(rl.DarkGray)
+
 		// draw the cells on screen 
 		for i := range Alive {
-			s.SetContent(i.x, i.y, '+', nil, defStyle)
+			rec := rl.Rectangle{
+				X: float32(i.x * Size),
+				Y: float32(i.y * Size), 
+				Width: float32(Size), 
+				Height: float32(Size), 
+			}
+
+			rl.DrawRectangleLinesEx(rec, 2.0, rl.White)
 		}
 
-		s.Show()
-		time.Sleep(time.Millisecond * 50)
+
+		rl.EndDrawing()
 	}
+	rl.CloseWindow()
 }
+

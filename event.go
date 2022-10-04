@@ -1,33 +1,50 @@
 package main
 
-import "github.com/gdamore/tcell/v2"
+import (
+	"log"
 
-func eventHandling(s tcell.Screen) {
-	for {
-		ev := s.PollEvent()
+	"github.com/gen2brain/raylib-go/raylib"
+)
 
-		switch ev := ev.(type) {
-		case *tcell.EventResize:
-			W, H = ev.Size()
-		case *tcell.EventKey:
-			if ev.Key() == tcell.KeyCtrlC || ev.Key() == tcell.KeyEscape {
-				quit(s)
+func eventHandler() {
+	if rl.IsMouseButtonPressed(rl.MouseRightButton) {
+		Run = !Run
+		if !Run { 
+			log.Println("PAUSED") 
+		} else { log.Println("RESUMED")}
+	}
+
+	if rl.IsMouseButtonDown(rl.MouseLeftButton) {
+		mPos := rl.GetMousePosition()
+		posCell := cell{ x: int(mPos.X/float32(Size)),
+						 y: int(mPos.Y/float32(Size))}
+		
+		if rl.IsMouseButtonPressed(rl.MouseLeftButton) {
+			if isAlive(posCell) {
+				log.Println("Manual Kill:", posCell)
+				Mkill = true 
+				delete(Alive, posCell) 
+			} else {
+				log.Println("Manual Live:", posCell)
+				Mkill = false 
+				Alive[ posCell ] = true 
 			}
-		case *tcell.EventMouse:
-			if ev.Buttons() == tcell.ButtonPrimary {
-				posX, posY := ev.Position()
-				posCell := cell{x: posX, y: posY}
+		} else { 
+			if !Run {
+				posCell := cell{ x: int(mPos.X/float32(Size)),
+								 y: int(mPos.Y/float32(Size))}
 
-				if isAlive(posCell) {
+
+				if isAlive(posCell) && Mkill {
+					log.Println("Manual Kill:", posCell)
 					delete(Alive, posCell)
-				} else {
-					Alive[ cell{x: posX, y: posY} ] = true
 				}
-			} 
-
-			if ev.Buttons() == tcell.ButtonSecondary {
-				Run = !Run 
+				if !isAlive(posCell) && !Mkill {
+					log.Println("Manual Live:", posCell)
+					Alive[ posCell ] = true 
+				}
 			}
 		}
 	}
 }
+

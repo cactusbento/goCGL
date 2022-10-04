@@ -2,7 +2,10 @@ module goCGL
 
 go 1.19
 
-require github.com/gdamore/tcell/v2 v2.4.1-0.20210905002822-f057f0a857a1
+require (
+	github.com/gdamore/tcell/v2 v2.4.1-0.20210905002822-f057f0a857a1
+	github.com/gen2brain/raylib-go/raylib v0.0.0-20220922081930-a460a0fc06bb
+)
 
 require (
 	github.com/gdamore/encoding v1.0.0 // indirect
