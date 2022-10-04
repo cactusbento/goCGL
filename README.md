@@ -1,6 +1,8 @@
 # Conway's Game of Life
 
-This is an implementation of Conway's Game of Life (CGL) in GO in the terminal.
+This is an implementation of Conway's Game of Life (CGL) in GO in Raylib.
+
+![image](https://user-images.githubusercontent.com/14164311/193949151-ac933e1d-6f57-4c98-8b12-2c22e821af5c.png)
 
 ## Rules
 
