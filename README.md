@@ -11,7 +11,7 @@ This is an implementation of Conway's Game of Life (CGL) in GO in Raylib.
 3. Any live cell with more than three live neighbors dies
 4. Any dead cell with exactly three live neighbors becomes alive
 
-Simplified:
-1. Any live cell with two or three live neighbours survives.
-2. Any dead cell with three live neighbours becomes a live cell.
-3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+## Controls
+
+Mouse 1: Toggle Cells (Can drag while paused)
+Mouse 2: Pause/Unpause
