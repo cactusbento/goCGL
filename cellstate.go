@@ -44,7 +44,7 @@ func nextGen() map[cell]bool {
 		var n, d = checkNeighbors(c)
 
 		// Cell will continue into the next generation
-		if isAlive(c) && (n == 2 || n == 3) {
+		if isAlive(c) && (n == 2 || n == 3) && isInBounds(c) { 
 			ng[c] = true 
 		} 
 		
